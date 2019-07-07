@@ -26,7 +26,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post('/api/posts', (req, res, next) => {
+app.post('/api/posts', (req, res) => {
   const post = new Post({
     title: req.body.title,
     content: req.body.content
@@ -37,16 +37,22 @@ app.post('/api/posts', (req, res, next) => {
   });
 });
 
-app.get('/api/posts', (req, res, next) => {
-  const posts = [
-    { id: '123', title:'First post!', content: 'content 1'},
-    { id: '213123', title:'Second post!', content: 'content 2'},
-    { id: '121233', title:'Third post!', content: 'content 3'}
-  ];
-  res.status(200).json({
-    message: 'Posts fetched successfully',
-    posts: posts
-  });
+app.get('/api/posts', (req, res) => {
+  Post.find()
+    .then(documents => {
+      res.status(200).json({
+        message: 'Posts fetched successfully',
+        posts: documents
+      });
+    });
+});
+
+app.delete('/api/posts/:id', (req, res) => {
+  Post.deleteOne({ _id: req.params.id})
+    .then(result => {
+      console.log(result);
+      res.status(200).json({ message: 'Post deleted' });
+    });
 });
 
 module.exports = app;
