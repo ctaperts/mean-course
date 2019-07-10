@@ -1,6 +1,8 @@
 const express = require('express');
 const multer = require('multer');
 
+const Post = require('../models/post');
+
 const router = express.Router();
 
 const MIME_TYPE_MAP = {
@@ -25,8 +27,6 @@ const storage = multer.diskStorage({
   }
 });
 
-const Post = require('../models/post');
-
 router.post('', multer({storage: storage}).single('image'), (req, res) => {
   const url = req.protocol + '://' + req.get('host');
   const post = new Post({
@@ -48,7 +48,7 @@ router.post('', multer({storage: storage}).single('image'), (req, res) => {
     });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id',  multer({ storage: storage }).single('image'), (req, res) => {
   let imagePath = req.body.imagePath;
   if (req.file) {
     const url = req.protocol + '://' + req.get('host');
@@ -60,8 +60,8 @@ router.put('/:id', (req, res) => {
     content: req.body.content,
     imagePath: imagePath
   });
-  Post.updateOne({_id: req.params.id }, post).then(result => {
-    // console.log(result);
+  Post.updateOne({ _id: req.params.id }, post).then(result => {
+    console.log(result);
     res.status(200).json({ message: result.nModified + ' Document updated successful' });
   });
 });
