@@ -55,6 +55,13 @@ export class AuthService {
         this.router.navigate(['/']);
       });
   }
+
+  logout(){
+    this.token = null;
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
+    this.router.navigate(['/']);
+  }
 }
 
 
