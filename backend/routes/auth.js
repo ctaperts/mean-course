@@ -41,19 +41,20 @@ router.post('/login', (req, res) => {
       return bcrypt.compare(req.body.password, user.password);
     })
     .then(result => {
-      if (!result) {
-        res.status(401).json({
-          message: 'Auth failed'
-        });
+      if (result !== true) {
+        return;
       }
       const token = jwt.sign(
         {email: user.email, userId: user._id},
         'windowswallowknowarrow',
         {expiresIn: '1h'}
       );
+      res.status(200).json({
+        token: token
+      });
     })
     .catch(error => {
-      res.status(401).json({
+      return res.status(401).json({
         message: 'Auth failed',
         error: error
       });
