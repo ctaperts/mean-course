@@ -1,12 +1,9 @@
-const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const UserModel = require('../models/user');
 
-const router = express.Router();
-
-router.post('/signup', (req, res) => {
+exports.createUser = (req, res) => {
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new UserModel({
@@ -27,9 +24,9 @@ router.post('/signup', (req, res) => {
           });
         });
     });
-});
+};
 
-router.post('/login', (req, res) => {
+exports.userLogin = (req, res) => {
   let user;
   UserModel.findOne({email: req.body.email})
     .then(userData => {
@@ -62,6 +59,4 @@ router.post('/login', (req, res) => {
         error: error
       });
     });
-});
-
-module.exports = router;
+};
