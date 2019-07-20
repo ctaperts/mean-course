@@ -1,5 +1,8 @@
 # MeanCourse
 
+## Setup node environment secrets
+copy `nodemon.json.example` to `nodemon.json`
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.6.
 
 ## Development server
