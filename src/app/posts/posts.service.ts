@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { Post } from './post.model';
 import { environment } from '../../environments/environment'
 
-const BACKEND_URL = environment.apiUrl + '/posts'
+const BACKEND_URL = environment.apiUrl + '/posts/'
 
 @Injectable({providedIn: 'root'})
 export class PostsService {
@@ -55,7 +55,7 @@ export class PostsService {
     postData.append('image', image, title);
     this.http
       .post<{ message: string, post: Post }>(
-        'http://localhost:3000/api/posts',
+        BACKEND_URL,
         postData
       )
       .subscribe((responseData) => {
