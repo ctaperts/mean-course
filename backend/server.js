@@ -1,4 +1,4 @@
-const app = require('./backend/app');
+const app = require('./app');
 const debug = require('debug')('node-angular');
 const http = require('http');
 
@@ -38,7 +38,7 @@ const onError = error => {
 };
 
 const onListening = () => {
-  const addr = server.address();
+  // const addr = server.address();
   const bind = typeof port === 'string' ? 'pipe ' + port : 'port ' + port;
   debug('Listening on ' + bind);
 };
