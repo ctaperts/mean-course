@@ -3,6 +3,9 @@
 # Node environment variables
 nodemon.json
 
+# production output
+backend/angular/
+
 # compiled output
 /dist
 /tmp
